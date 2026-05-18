@@ -6,7 +6,7 @@ import statistics
 from datetime import datetime
 
 BOT_TOKEN = "8013194385:AAHRFcTr2T5kObSxBPQ-tdNw6AzNOGsMes0"
-CHAT_ID = "6553775216"
+CHAT_ID = CHAT_IDS = "6553775216", "-1003998806451"
 BIRDEYE_KEY = "86e20bdc71ea4be996bbf94ffa7e5a90"
 
 MIN_SCORE = 6
@@ -38,14 +38,17 @@ COINS = {
 alerted = {}
 
 def send(msg):
-    try:
-        requests.post(
-            f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
-            json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"},
-            timeout=10
-        )
-    except Exception as e:
-        print(f"Telegram error: {e}")
+    for cid in CHAT_IDS:
+        try:
+            requests.post(
+                f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
+                json={"chat_id": cid, "text": msg, "parse_mode": "HTML"},
+                timeout=10
+            )
+        except Exception as e:
+            print(f"Telegram error: {e}")
+    
+    
 
 def fetch_ohlc(coin, days=14):
     try:

@@ -6,7 +6,7 @@ import statistics
 from datetime import datetime
 
 BOT_TOKEN = "8013194385:AAHRFcTr2T5kObSxBPQ-tdNw6AzNOGsMes0"
-CHAT_ID = CHAT_IDS = ["6553775216", "-1003998806451"]
+CHAT_IDS = ["6553775216", "-1003998806451"]
 BIRDEYE_KEY = "86e20bdc71ea4be996bbf94ffa7e5a90"
 
 MIN_SCORE = 6
@@ -46,9 +46,7 @@ def send(msg):
                 timeout=10
             )
         except Exception as e:
-            print(f"Telegram error: {e}")
-    
-    
+            print(f"Telegram error {cid}: {e}")
 
 def fetch_ohlc(coin, days=14):
     try:
@@ -293,7 +291,7 @@ def score_coin(coin, ohlc, market):
         if ls > ss: ls += 1.0; lr.append(f"High volume activity ({vol_ratio}%)")
         else:       ss += 1.0; sr.append(f"High volume activity ({vol_ratio}%)")
 
-    if c24 < -8 and rv < 35:   ls += 1.2; lr.append(f"Oversold bounce setup ({c24:.1f}% drop)")
+    if c24 < -8 and rv < 35:    ls += 1.2; lr.append(f"Oversold bounce setup ({c24:.1f}% drop)")
     elif c1h > 0.5 and rv < 50: ls += 0.5; lr.append(f"Positive 1H momentum (+{c1h:.1f}%)")
     if c24 > 10 and rv > 65:    ss += 1.2; sr.append(f"Overbought reversal setup (+{c24:.1f}% pump)")
     elif c1h < -0.5 and rv > 50: ss += 0.5; sr.append(f"Negative 1H momentum ({c1h:.1f}%)")
@@ -380,7 +378,7 @@ def format_and_send(coin, direction, score, reasons, lvl, market, info):
         f"⚠️ Verify on chart before entering\n"
         f"⚠️ Never trade without Stop Loss\n\n"
         f"{datetime.now().strftime('%Y-%m-%d %H:%M UTC')}\n"
-        f"Meme_Express Signals v3.0"
+        f"Alpha Wizard Signals"
     )
     send(msg)
     print(f"  SIGNAL: {direction} {info['name']} | Score:{score}/15 | R:R:1:{lvl['rr']}")
@@ -411,9 +409,9 @@ def scan(scheduled=False):
     print(f"Done. {found} signals | {errors} errors")
     if scheduled:
         if found > 0:
-            send(f"Scan done — {now}\n{found} signal(s) sent!\n\nFear&Greed: {fg_val} ({fg_label})\nBTC Dom: {btc_dom}%\n\nMeme_Express v3.0")
+            send(f"Scan done — {now}\n{found} signal(s) sent!\n\nFear&Greed: {fg_val} ({fg_label})\nBTC Dom: {btc_dom}%\n\nAlpha Wizard Signals")
         else:
-            send(f"Scan done — {now}\nNo strong setups. Market consolidating.\n\nFear&Greed: {fg_val} ({fg_label})\nBTC Dom: {btc_dom}%\n\nMeme_Express v3.0")
+            send(f"Scan done — {now}\nNo strong setups. Market consolidating.\n\nFear&Greed: {fg_val} ({fg_label})\nBTC Dom: {btc_dom}%\n\nAlpha Wizard Signals")
 
 def run_scheduler():
     for t in ["00:00","04:00","08:00","12:00","16:00","20:00"]:
@@ -424,7 +422,7 @@ def run_scheduler():
 
 def main():
     send(
-        f"Meme_Express Signal Bot v3.0 LIVE!\n\n"
+        f"Alpha Wizard Signals LIVE!\n\n"
         f"Monitoring {len(COINS)} coins\n"
         f"9 indicators: RSI, Stoch RSI, MACD,\n"
         f"Bollinger Bands, EMA Trend, Support/Resistance,\n"
@@ -432,7 +430,7 @@ def main():
         f"Min Score: {MIN_SCORE}/15 | Min R:R: 1:{RR_MIN}\n"
         f"Scans: Every 4hrs + Every 15mins\n\n"
         f"Always use Stop Loss.\n"
-        f"Meme_Express v3.0"
+        f"Alpha Wizard Signals"
     )
     threading.Thread(target=run_scheduler, daemon=True).start()
     scan(True)

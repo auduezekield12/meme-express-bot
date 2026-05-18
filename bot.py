@@ -6,7 +6,7 @@ import statistics
 from datetime import datetime
 
 BOT_TOKEN = "8013194385:AAHRFcTr2T5kObSxBPQ-tdNw6AzNOGsMes0"
-CHAT_ID = CHAT_IDS = "6553775216", "-1003998806451"
+CHAT_ID = CHAT_IDS = ["6553775216", "-1003998806451"]
 BIRDEYE_KEY = "86e20bdc71ea4be996bbf94ffa7e5a90"
 
 MIN_SCORE = 6
